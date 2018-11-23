@@ -1,11 +1,11 @@
 {
-  "name": "loi",
+  "name": "loy",
   "version": "1.0.0",
   "description": "like joi but for outputs",
   "main": "build/main/index.js",
   "typings": "build/main/index.d.ts",
   "module": "build/module/index.js",
-  "repository": "https://github.com/fega/loi",
+  "repository": "https://github.com/fega/loy",
   "license": "MIT",
   "keywords": [],
   "scripts": {
@@ -17,7 +17,6 @@
     "fix:prettier": "prettier \"src/**/*.ts\" --write",
     "fix:tslint": "tslint --fix --project .",
     "test": "run-s build test:*",
-    "test:lint": "tslint --project . && prettier \"src/**/*.ts\" --list-different",
     "test:unit": "nyc --silent ava",
     "watch": "run-s clean build:main && run-p \"build:main -- -w\" \"test:unit -- --watch\"",
     "cov": "run-s build test:unit cov:html && opn coverage/index.html",
