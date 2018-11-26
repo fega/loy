@@ -1,12 +1,20 @@
-const def = { permissions: [], examples: [], models: [] }
-const SECRET_RESULT = '<>!-!_LOI_GENERATE_DESCRIPTIONS_!-!<>'
+export const Test = '<>!-!_LOI_GENERATE_DESCRIPTIONS_!-!<>'
 export const Url = 'Url'
 export const File = 'File'
 
-export function Give(result: any, user?: any, state: any = def) {
+/**
+ * Return a result
+ * @param result expected result
+ * @param user user object
+ * @param state state
+ */
+export function Give(result: any, user?: any, state: any = { permissions: [], examples: [], models: [] }) {
   return {
     ok() {
-      if (result === SECRET_RESULT) return state
+      if (result === Test) {
+        const { previous, ...rest } = state
+        return rest
+      }
       if (state.permissions.length && !user) return undefined
       if (state.permissions.length && !user.permissions) return undefined
       // if (state.permissions.length && user.permissions.permissions.includes[])
@@ -14,7 +22,7 @@ export function Give(result: any, user?: any, state: any = def) {
     },
     description(description) {
       state.description = description
-      return Give(result)
+      return Give(result, result, state)
     },
     for(permission: Array<string | Array<string>> | string) {
       state.permissions.push(permission)
@@ -32,13 +40,13 @@ export function Give(result: any, user?: any, state: any = def) {
     as(model: string | String | Number | Object | Boolean | 'Url' | 'File' | Date) {
       state.models.push(model)
       state.previous = 'models'
-      return Give(result)
+      return Give(result, user, state)
     },
     min() {
-      return Give(result)
+      return Give(result, user, state)
     },
     max() {
-      return Give(result)
+      return Give(result, user, state)
     },
     example(example: string) {
       state.examples.push(example)
@@ -48,3 +56,21 @@ export function Give(result: any, user?: any, state: any = def) {
     }
   }
 }
+
+export function Describe(fn: Function) {
+  try {
+    const keys = Object.keys(fn({}, {}))
+
+    const testObj = keys.reduce((obj, key) => {
+      obj[key] = Test
+      return obj
+    }, {})
+    return fn(testObj, {})
+  } catch (error) {
+    return {}
+  }
+}
+
+
+export const give = Give
+export const describe = Describe
