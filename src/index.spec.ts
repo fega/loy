@@ -49,7 +49,8 @@ test('Describe function', (t) => {
       .as(String)
       .example('hello')
       .description('A field description')
-      .ok()
+      .ok(),
+    other: resource.other,
   }))
   t.deepEqual(description, {
     name: {
@@ -57,6 +58,9 @@ test('Describe function', (t) => {
       description: 'A field description',
       models: [String],
       permissions: ['admin'],
+    },
+    other: {
+      models: [String]
     }
   })
 })

@@ -65,7 +65,13 @@ export function Describe(fn: Function) {
       obj[key] = Test
       return obj
     }, {})
-    return fn(testObj, {})
+    const obj = Object.entries(fn(testObj, {}))
+      .reduce((o, [key, value]) => {
+        if (value == Test) o[key] = { models: [String] }
+        else o[key] = value
+        return o
+      }, {})
+    return obj
   } catch (error) {
     return {}
   }
