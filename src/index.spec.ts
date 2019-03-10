@@ -21,7 +21,7 @@ test('Doy(Test,userAdmin).is("admin").send()', async t => {
   t.deepEqual(r,
     {
       examples: [],
-      models: [],
+      type: [],
       permissions: ['admin']
     }
   )
@@ -37,7 +37,7 @@ test('Doy(Test,userAdmin).as(String).is("admin").send()', async t => {
     {
       examples: ['hello'],
       description: 'A field description',
-      models: ['string'],
+      type: ['string'],
       permissions: ['admin'],
     }
   )
@@ -57,11 +57,11 @@ test('Describe function', (t) => {
     name: {
       examples: ['hello'],
       description: 'A field description',
-      models: ['string'],
+      type: ['string'],
       permissions: ['admin'],
     },
     other: {
-      models: ['string']
+      type: ['string']
     }
   })
 })
@@ -73,7 +73,7 @@ test('Describe function 2', t => {
     hello: {
       description: 'a field',
       examples: [],
-      models: [
+      type: [
         'string',
       ],
       permissions: [],

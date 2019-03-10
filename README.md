@@ -22,7 +22,7 @@ const out:(resource,user)=>{
       .for('admin') // define the necessary user permission
       .or('user') // alternative permission
       // documentation:
-      .as(String)
+      .as('string')
       .example('field example')
       .description('field description')
       // always finish with this:

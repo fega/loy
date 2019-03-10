@@ -1,6 +1,7 @@
 export const Test = '<>!-!_LOI_GENERATE_DESCRIPTIONS_!-!<>'
-export const Url = 'Url'
-export const File = 'File'
+export const Url = 'loi_internal_Url'
+export const File = 'loi_internal_File'
+export const Image = 'loi_internal_Image'
 
 /**
  * Return a result
@@ -8,7 +9,7 @@ export const File = 'File'
  * @param user user object
  * @param state state
  */
-export function Give(result: any, user?: any, state: any = { permissions: [], examples: [], models: [] }) {
+export function Give(result: any, user?: any, state: any = { permissions: [], examples: [], type: [] }) {
   return {
     ok() {
       if (result === Test) {
@@ -37,9 +38,9 @@ export function Give(result: any, user?: any, state: any = { permissions: [], ex
       if (state.previous) state[state.previous].push(item)
       return Give(result, user, state)
     },
-    as(model: string | 'Url' | 'File' | Date) {
-      state.models.push(model)
-      state.previous = 'models'
+    as(model: string | Date) {
+      state.type.push(model)
+      state.previous = 'type'
       return Give(result, user, state)
     },
     min() {
@@ -71,7 +72,7 @@ export function Describe(fn: Function) {
     }, {})
     const obj = Object.entries(fn(testObj, {}))
       .reduce((o, [key, value]) => {
-        if (value == Test) o[key] = { models: ['string'] }
+        if (value == Test) o[key] = { type: ['string'] }
         else o[key] = value
         return o
       }, {})
