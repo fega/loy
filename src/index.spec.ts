@@ -1,6 +1,7 @@
 // tslint:disable:no-expression-statement
 import test from 'ava';
-import { Give, Test, Describe } from '.';
+import { Give, Test, Describe, describe, give } from '.';
+import { primitiveToString } from './util'
 
 test('Doy().send()', async t => {
   const r = Give(1).ok()
@@ -28,7 +29,7 @@ test('Doy(Test,userAdmin).is("admin").send()', async t => {
 test('Doy(Test,userAdmin).as(String).is("admin").send()', async t => {
   const r = Give(Test, { permissions: ["admin"] })
     .for('admin')
-    .as(String)
+    .as('string')
     .example('hello')
     .description('A field description')
     .ok()
@@ -36,7 +37,7 @@ test('Doy(Test,userAdmin).as(String).is("admin").send()', async t => {
     {
       examples: ['hello'],
       description: 'A field description',
-      models: [String],
+      models: ['string'],
       permissions: ['admin'],
     }
   )
@@ -46,7 +47,7 @@ test('Describe function', (t) => {
   const description = Describe((resource, user) => ({
     name: Give(resource.name, user)
       .for('admin')
-      .as(String)
+      .as('string')
       .example('hello')
       .description('A field description')
       .ok(),
@@ -56,11 +57,41 @@ test('Describe function', (t) => {
     name: {
       examples: ['hello'],
       description: 'A field description',
-      models: [String],
+      models: ['string'],
       permissions: ['admin'],
     },
     other: {
-      models: [String]
+      models: ['string']
     }
   })
+})
+test('Describe function 2', t => {
+  const d = describe(resource => ({
+    hello: give(resource.hello).as('string').description('a field').ok(),
+  }))
+  t.deepEqual(d, {
+    hello: {
+      description: 'a field',
+      examples: [],
+      models: [
+        'string',
+      ],
+      permissions: [],
+    }
+  })
+})
+/**
+ * Primitive to String
+ */
+test('primitiveToString(String)', (t) => {
+  t.is(primitiveToString(String), 'String')
+})
+test('primitiveToString(Number)', (t) => {
+  t.is(primitiveToString(Number), 'Number')
+})
+test('primitiveToString(Boolean)', (t) => {
+  t.is(primitiveToString(Boolean), 'Boolean')
+})
+test('primitiveToString("Url")', (t) => {
+  t.is(primitiveToString("Url"), "Url")
 })

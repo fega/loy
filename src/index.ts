@@ -37,7 +37,7 @@ export function Give(result: any, user?: any, state: any = { permissions: [], ex
       if (state.previous) state[state.previous].push(item)
       return Give(result, user, state)
     },
-    as(model: string | String | Number | Object | Boolean | 'Url' | 'File' | Date) {
+    as(model: string | 'Url' | 'File' | Date) {
       state.models.push(model)
       state.previous = 'models'
       return Give(result, user, state)
@@ -56,6 +56,10 @@ export function Give(result: any, user?: any, state: any = { permissions: [], ex
     }
   }
 }
+/**
+ * generates a description of an output function'
+ * @param fn output function to describe
+ */
 
 export function Describe(fn: Function) {
   try {
@@ -67,7 +71,7 @@ export function Describe(fn: Function) {
     }, {})
     const obj = Object.entries(fn(testObj, {}))
       .reduce((o, [key, value]) => {
-        if (value == Test) o[key] = { models: [String] }
+        if (value == Test) o[key] = { models: ['string'] }
         else o[key] = value
         return o
       }, {})
