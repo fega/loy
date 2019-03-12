@@ -1,6 +1,6 @@
 // tslint:disable:no-expression-statement
 import test from 'ava';
-import { Give, Test, Describe, describe, give } from '.';
+import { Give, Test, Describe, describe, give, Image } from '.';
 import { primitiveToString } from './util'
 
 test('Doy().send()', async t => {
@@ -48,6 +48,7 @@ test('Describe function', (t) => {
       .as('string')
       .example('hello')
       .description('A field description')
+      .format(Image)
       .ok(),
     other: resource.other,
   }))
@@ -57,6 +58,7 @@ test('Describe function', (t) => {
       description: 'A field description',
       type: ['string'],
       permissions: ['admin'],
+      format: Image
     },
     other: {
     }

@@ -10,7 +10,7 @@ export const Image = 'loi_internal_Image'
  * @param user user object
  * @param state state
  */
-export function Give(result: any, user?: any, state: any = { permissions: [], examples: [], type: [], format: [] }) {
+export function Give(result: any, user?: any, state: any = { permissions: [], examples: [], type: [] }) {
   return {
     ok() {
       if (result === Test) {
@@ -51,7 +51,7 @@ export function Give(result: any, user?: any, state: any = { permissions: [], ex
       return Give(result, user, state)
     },
     format(format: string | Date) {
-      state.type.push(format)
+      state.format = format
       state.previous = 'format'
       return Give(result, user, state)
     },
