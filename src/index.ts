@@ -1,3 +1,4 @@
+import { createTestObject, getItem } from './util'
 export const Test = '<>!-!_LOI_GENERATE_DESCRIPTIONS_!-!<>'
 export const Url = 'loi_internal_Url'
 export const File = 'loi_internal_File'
@@ -9,12 +10,18 @@ export const Image = 'loi_internal_Image'
  * @param user user object
  * @param state state
  */
-export function Give(result: any, user?: any, state: any = { permissions: [], examples: [], type: [] }) {
+export function Give(result: any, user?: any, state: any = { permissions: [], examples: [], type: [], format: [] }) {
   return {
     ok() {
       if (result === Test) {
         const { previous, ...rest } = state
-        return rest
+        return {
+          ...getItem(rest.permissions, "permissions"),
+          ...getItem(rest.examples, "examples"),
+          ...getItem(rest.type, "type"),
+          ...getItem(rest.format, "format"),
+          ...getItem(rest.description, 'description')
+        }
       }
       if (state.permissions.length && !user) return undefined
       if (state.permissions.length && !user.permissions) return undefined
@@ -43,6 +50,11 @@ export function Give(result: any, user?: any, state: any = { permissions: [], ex
       state.previous = 'type'
       return Give(result, user, state)
     },
+    format(format: string | Date) {
+      state.type.push(format)
+      state.previous = 'format'
+      return Give(result, user, state)
+    },
     min() {
       return Give(result, user, state)
     },
@@ -66,13 +78,13 @@ export function Describe(fn: Function) {
   try {
     const keys = Object.keys(fn({}, {}))
 
-    const testObj = keys.reduce((obj, key) => {
-      obj[key] = Test
-      return obj
-    }, {})
+    const testObj = createTestObject(keys);
+
     const obj = Object.entries(fn(testObj, {}))
       .reduce((o, [key, value]) => {
-        if (value == Test) o[key] = { type: ['string'] }
+        // If key is not a Loy object
+        if (value == Test) o[key] = {}
+        // if key  id loy object
         else o[key] = value
         return o
       }, {})

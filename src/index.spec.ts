@@ -20,8 +20,6 @@ test('Doy(Test,userAdmin).is("admin").send()', async t => {
   const r = Give(Test, { permissions: ["admin"] }).for('admin').ok()
   t.deepEqual(r,
     {
-      examples: [],
-      type: [],
       permissions: ['admin']
     }
   )
@@ -61,7 +59,6 @@ test('Describe function', (t) => {
       permissions: ['admin'],
     },
     other: {
-      type: ['string']
     }
   })
 })
@@ -72,11 +69,9 @@ test('Describe function 2', t => {
   t.deepEqual(d, {
     hello: {
       description: 'a field',
-      examples: [],
       type: [
         'string',
       ],
-      permissions: [],
     }
   })
 })
