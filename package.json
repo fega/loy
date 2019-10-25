@@ -1,6 +1,6 @@
 {
   "name": "loy",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "like joi but for outputs",
   "main": "build/main/index.js",
   "typings": "build/main/index.d.ts",

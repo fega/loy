@@ -1,6 +1,6 @@
 import { createTestObject, getItem } from './util'
 export const Test = '<>!-!_LOI_GENERATE_DESCRIPTIONS_!-!<>'
-export const Date = 'loi_internal_Date'
+export const DateItem = 'loi_internal_Date'
 export const Url = 'loi_internal_Url'
 export const File = 'loi_internal_File'
 export const Image = 'loi_internal_Image'
