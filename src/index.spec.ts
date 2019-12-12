@@ -1,47 +1,49 @@
 // tslint:disable:no-expression-statement
 import test from 'ava';
 import { Give, Test, Describe, describe, give, Image } from '.';
-import { primitiveToString } from './util'
+import { primitiveToString } from './util';
 
 test('Doy().send()', async t => {
-  const r = Give(1).ok()
-  t.is(r, 1)
+  const r = Give(1).ok();
+  t.is(r, 1);
 });
 test('Doy().is().send()', async t => {
-  const r = Give(1).for('admin').ok()
-  t.is(r, undefined)
+  const r = Give(1)
+    .for('admin')
+    .ok();
+  t.is(r, undefined);
 });
 
 test('Doy(1,userAdmin).is("admin").send()', async t => {
-  const r = Give(1, { permissions: ["admin"] }).for('admin').ok()
-  t.is(r, 1)
+  const r = Give(1, { permissions: ['admin'] })
+    .for('admin')
+    .ok();
+  t.is(r, 1);
 });
 test('Doy(Test,userAdmin).is("admin").send()', async t => {
-  const r = Give(Test, { permissions: ["admin"] }).for('admin').ok()
-  t.deepEqual(r,
-    {
-      permissions: ['admin']
-    }
-  )
+  const r = Give(Test, { permissions: ['admin'] })
+    .for('admin')
+    .ok();
+  t.deepEqual(r, {
+    permissions: ['admin']
+  });
 });
 test('Doy(Test,userAdmin).as(String).is("admin").send()', async t => {
-  const r = Give(Test, { permissions: ["admin"] })
+  const r = Give(Test, { permissions: ['admin'] })
     .for('admin')
     .as('string')
     .example('hello')
     .description('A field description')
-    .ok()
-  t.deepEqual(r,
-    {
-      examples: ['hello'],
-      description: 'A field description',
-      type: ['string'],
-      permissions: ['admin'],
-    }
-  )
+    .ok();
+  t.deepEqual(r, {
+    examples: ['hello'],
+    description: 'A field description',
+    type: ['string'],
+    permissions: ['admin']
+  });
 });
 
-test('Describe function', (t) => {
+test('Describe function', t => {
   const description = Describe((resource, user) => ({
     name: Give(resource.name, user)
       .for('admin')
@@ -50,8 +52,8 @@ test('Describe function', (t) => {
       .description('A field description')
       .format(Image)
       .ok(),
-    other: resource.other,
-  }))
+    other: resource.other
+  }));
   t.deepEqual(description, {
     name: {
       examples: ['hello'],
@@ -60,35 +62,35 @@ test('Describe function', (t) => {
       permissions: ['admin'],
       format: Image
     },
-    other: {
-    }
-  })
-})
+    other: {}
+  });
+});
 test('Describe function 2', t => {
   const d = describe(resource => ({
-    hello: give(resource.hello).as('string').description('a field').ok(),
-  }))
+    hello: give(resource.hello)
+      .as('string')
+      .description('a field')
+      .ok()
+  }));
   t.deepEqual(d, {
     hello: {
       description: 'a field',
-      type: [
-        'string',
-      ],
+      type: ['string']
     }
-  })
-})
+  });
+});
 /**
  * Primitive to String
  */
-test('primitiveToString(String)', (t) => {
-  t.is(primitiveToString(String), 'String')
-})
-test('primitiveToString(Number)', (t) => {
-  t.is(primitiveToString(Number), 'Number')
-})
-test('primitiveToString(Boolean)', (t) => {
-  t.is(primitiveToString(Boolean), 'Boolean')
-})
-test('primitiveToString("Url")', (t) => {
-  t.is(primitiveToString("Url"), "Url")
-})
+test('primitiveToString(String)', t => {
+  t.is(primitiveToString(String), 'String');
+});
+test('primitiveToString(Number)', t => {
+  t.is(primitiveToString(Number), 'Number');
+});
+test('primitiveToString(Boolean)', t => {
+  t.is(primitiveToString(Boolean), 'Boolean');
+});
+test('primitiveToString("Url")', t => {
+  t.is(primitiveToString('Url'), 'Url');
+});

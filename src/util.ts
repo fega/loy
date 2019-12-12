@@ -1,5 +1,5 @@
-
-type Primitive = String
+type Primitive =
+  | String
   | string
   | Number
   | Object
@@ -10,31 +10,30 @@ type Primitive = String
   | [String]
   | [Number]
   | [Object]
-  | [Boolean]
+  | [Boolean];
 
-export const Test = '<>!-!_LOI_GENERATE_DESCRIPTIONS_!-!<>'
-
+export const Test = '<>!-!_LOI_GENERATE_DESCRIPTIONS_!-!<>';
 
 export const primitiveToString = (primitive: Primitive) => {
   if (primitive === 'Url') {
-    return 'Url'
+    return 'Url';
   } else if (primitive === 'File') {
     // @ts-ignore
   } else if (primitive.name) {
     // @ts-ignore
-    return primitive.name
+    return primitive.name;
   }
-}
+};
 
 export const createTestObject = (keys: string[]) => {
   return keys.reduce((obj, key) => {
-    obj[key] = Test
-    return obj
-  }, {})
-}
+    obj[key] = Test;
+    return obj;
+  }, {});
+};
 
 export const getItem = (item, name) => {
-  if (Array.isArray(item) && !item.length) return {}
-  if (item === '' || item === undefined) return {}
-  return { [name]: item }
-}
+  if (Array.isArray(item) && !item.length) return {};
+  if (item === '' || item === undefined) return {};
+  return { [name]: item };
+};
